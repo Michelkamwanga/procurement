@@ -38,7 +38,6 @@ if uploaded_file:
         bureau = st.multiselect("Bureau", df['Dept ID'].dropna().unique(), default=df['Dept ID'].unique())
         projet = st.multiselect("Projet", df['Fund Code'].dropna().unique(), default=df['Fund Code'].unique())
         project_id = st.multiselect("Project ID", df['Project ID'].dropna().unique(), default=df['Project ID'].unique())
-        pobuyer = st.multiselect("PO Buyer", df['PO Buyer'].dropna().unique(), default=df['PO Buyer'].unique())
         annee = st.multiselect("Année", df['PR-Year'].dropna().unique(), default=df['PR-Year'].unique())
         statut_pr = st.multiselect("Statut du PR", df['PR Status'].dropna().unique(), default=df['PR Status'].unique())
         devise = st.multiselect("Devise", df['Currency'].dropna().unique(), default=df['Currency'].unique())
@@ -54,8 +53,6 @@ if uploaded_file:
         df = df[df['Fund Code'].isin(projet)]
     if project_id:
         df = df[df['Project ID'].isin(project_id)]
-    if pobuyer:
-        df = df[df['PO Buyer'].isin(pobuyer)]
     if annee:
         df = df[df['PR-Year'].isin(annee)]
     if statut_pr:
