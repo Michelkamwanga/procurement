@@ -38,12 +38,16 @@ if uploaded_file:
         bureau = st.multiselect("Bureau", df['Dept ID'].dropna().unique(), default=df['Dept ID'].unique())
         projet = st.multiselect("Projet", df['Fund Code'].dropna().unique(), default=df['Fund Code'].unique())
         project_id = st.multiselect("Project ID", df['Project ID'].dropna().unique(), default=df['Project ID'].unique())
+        buyer_options = df['PO Buyer'].dropna().unique()  # Supprimer les NaN
+        buyer_id = st.multiselect("PO Buyer", buyer_options, default=list(buyer_options)) 
         annee = st.multiselect("Année", df['PR-Year'].dropna().unique(), default=df['PR-Year'].unique())
         statut_pr = st.multiselect("Statut du PR", df['PR Status'].dropna().unique(), default=df['PR Status'].unique())
         devise = st.multiselect("Devise", df['Currency'].dropna().unique(), default=df['Currency'].unique())
         requisition = st.multiselect("Requisition/DA", df['Requisition ID'].dropna().unique(), default=[])
         po = st.multiselect("PO/RFQ", df['RFQ ID'].dropna().unique(), default=[])
         voucher = st.multiselect("Voucher", df['Voucher ID'].dropna().unique(), default=[])
+        prstatus = st.multiselect("PR Status", df['PR Status'].dropna().unique(), default=[])
+        postatus = st.multiselect("PO Status", df['PO Status'].dropna().unique(), default=[])
 
     
     # Appliquer les filtres
@@ -53,6 +57,8 @@ if uploaded_file:
         df = df[df['Fund Code'].isin(projet)]
     if project_id:
         df = df[df['Project ID'].isin(project_id)]
+    if buyer_id:
+        df = df[df['PO Buyer'].isin(buyer_id)]
     if annee:
         df = df[df['PR-Year'].isin(annee)]
     if statut_pr:
@@ -65,6 +71,10 @@ if uploaded_file:
         df = df[df['RFQ ID'].isin(po)]
     if voucher:
         df = df[df['Voucher ID'].isin(voucher)]
+    if prstatus:
+        df = df[df['PR Status'].isin(prstatus)]
+    if postatus:
+        df = df[df['PO Status'].isin(postatus)]
 
     # Style CSS personnalisé
     st.markdown("""
