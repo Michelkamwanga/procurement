@@ -39,7 +39,7 @@ if uploaded_file:
         projet = st.multiselect("Projet", df['Fund Code'].dropna().unique(), default=df['Fund Code'].unique())
         project_id = st.multiselect("Project ID", df['Project ID'].dropna().unique(), default=df['Project ID'].unique())
         buyer_options = df['PO Buyer'].dropna().unique()  # Supprimer les NaN
-        buyer_id = st.multiselect("PO Buyer", buyer_options, default=list(buyer_options)) 
+        buyer_id = st.multiselect("PO Buyer", buyer_options, default=[])
         annee = st.multiselect("Année", df['PR-Year'].dropna().unique(), default=df['PR-Year'].unique())
         statut_pr = st.multiselect("Statut du PR", df['PR Status'].dropna().unique(), default=df['PR Status'].unique())
         devise = st.multiselect("Devise", df['Currency'].dropna().unique(), default=df['Currency'].unique())
