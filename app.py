@@ -19,30 +19,9 @@ st.title("CARE DRC PROCUREMENT STATUS DASHBOARD")
 st.markdown("**Auteur : CARE DRC | Conception : Michel Kamwanga | Contribution technique : Bennet Shabani**")
 
 # Chargement des données
-uploaded_file = st.file_uploader(
-    "Chargez un fichier Excel extrait de Peoplesoft. Ne changez pas les noms de colonnes",
-    type=["xls", "csv", "xlsx"]
-)
-
+uploaded_file = st.file_uploader("Chargez un fichier Excel extrait de Peoplesoft. Ne changez pas les noms de colonnes ", type=["xls", "csv","xlsx"])
 if uploaded_file:
-    file_name = uploaded_file.name.lower()
-
-    try:
-        if file_name.endswith(".csv"):
-            df = pd.read_csv(uploaded_file)
-        elif file_name.endswith(".xlsx"):
-            df = pd.read_excel(uploaded_file, engine='openpyxl')
-        elif file_name.endswith(".xls"):
-            df = pd.read_excel(uploaded_file, engine='xlrd')  # xlrd doit être installé si tu utilises des fichiers .xls
-        else:
-            st.error("Format de fichier non pris en charge.")
-            df = None
-
-        if df is not None:
-            st.success("Fichier chargé avec succès !")
-            st.dataframe(df.head())
-    except Exception as e:
-        st.error(f"Erreur lors du chargement du fichier : {e}")
+    df = pd.read_excel(uploaded_file)
     
     # Mapping des valeurs de la colonne 'Dept ID'
     dept_mapping = {
@@ -56,7 +35,8 @@ if uploaded_file:
     # Sidebar pour les filtres
     with st.sidebar:
         st.header("Filtres")
-        bureau = st.multiselect("Bureau", df['Dept ID'].dropna().unique(), default=df['Dept ID'].unique())
+        options = df['Dept ID'].dropna().unique()
+        bureau = st.multiselect("Bureau", options=options, default=options)
         projet = st.multiselect("Projet", df['Fund Code'].dropna().unique(), default=df['Fund Code'].unique())
         project_id = st.multiselect("Project ID", df['Project ID'].dropna().unique(), default=df['Project ID'].unique())
         buyer_options = df['PO Buyer'].dropna().unique()  # Supprimer les NaN
